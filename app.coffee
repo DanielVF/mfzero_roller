@@ -153,48 +153,31 @@ allFrames.on 'add', (model)->
     
 $('#endTurn').on 'click', ->
     allFrames.each (f)->f.endTurn()
+    
+    
+# The edit page stuff should be refactored into a backbone view and model
+$('#editFrames').on 'click', ->
+    $('#frameCards').toggle()
+    $('#frameSetup').toggle()
+$('#save').on 'click', ->
+    loadFromSetup()
+    $('#frameCards').toggle()
+    $('#frameSetup').toggle()
 
-allFrames.add
-    name: "Col. Salt"
-    team: "red"
-    setup: 
-        Rd: [2,'Long Range Pounders']
-        B: [1,'Xenon Hardned Shield']
-        G: [1,'Bi-fuel Jet Packs']
-allFrames.add
-    name: "Cpt. Ordanaro"
-    team: "red"
-    setup:
-        Rd: [2,'Long Range Pounders']
-        B: [1,'Composite Armour']
-        Y: [1,'XT-77 Scope']
-allFrames.add
-    name: "Long Glasser"
-    team: "green"
-    setup:
-        Ra: [1,"166mm Artillery Tube"]
-        Y: [2,"Zeropoint Field Sensor"]
-        B: [1, "Forcefield Module"]
-allFrames.add
-    name: "Scrambler #1"
-    team: "green"
-    setup:
-        Rh: [2,"Kordavi Ranged Blades"]
-        Y: [1,"Laser Designator"]
-        B: [1, "Forcefield Module"]
-allFrames.add
-    name: "Scrambler #2"
-    team: "green"
-    setup:
-        Rh: [2,"Kordavi Ranged Blades"]
-        Y: [1,"Laser Designator"]
-        B: [1, "Forcefield Module"]
-allFrames.add
-    name: "Scrambler #3"
-    team: "green"
-    setup:
-        Rh: [2,"Kordavi Ranged Blades"]
-        Y: [1,"Laser Designator"]
-        B: [1, "Forcefield Module"]
+loadFromSetup = ->
+    allFrames.each (x)->x.trigger('remove')
+    allFrames.reset()
+    ATTACHMENT_REGEX = /([0-9])?([A-Z][a-z]?) (.+)/
+    for color in ['red','green','blue']
+        framesText = $('#frameSetup [name='+color+']').val()
+        for line in framesText.split("\n") when line.indexOf(',')>0
+            [name,attachmentTexts...] = line.split(',')
+            frameAttachments = {}
+            for text in attachmentTexts when match = ATTACHMENT_REGEX.exec(text)
+                [all,number,type,desc] = match
+                frameAttachments[type] = [number,desc]
+            allFrames.add {name: name, team: color, setup: frameAttachments}
+
+loadFromSetup()
 
 window.allFrames = allFrames

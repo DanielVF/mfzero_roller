@@ -27,6 +27,9 @@
             .card.team-green > h1 {
                 background: #2C7204;
             }
+            .card.team-blue > h1 {
+                background: #005A85;
+            }
             .card.moved {opacity:0.6; }
             
             .card > .attachments { margin-top:90px }
@@ -47,7 +50,9 @@
     </head>
     <body>
         <div class="container">
+            
             <button id="endTurn" style="float:right; margin-left: 10px; margin-top:4px;" class="btn btn-warning">End Turn</button>
+            <button id="editFrames" style="float:right; margin-left: 10px; margin-top:4px;" class="btn btn">Edit</button>
             <!-- <button id="addFrame" style="float:right; margin-top:4px;" class="btn btn-success">Add Frame</button> -->
             <h1 contenteditable="true">Mobile Frame Zero Dice</h1>
             <div class="row" id="frameCards">
@@ -61,6 +66,30 @@
                             <!-- <p>To start your own game, just remove the current frames and add your own.</p> -->
                         </div>
                     </div>
+                </div>
+            </div>
+            
+            
+            <hr>
+            <div class="row" id="frameSetup" style="display:none">
+                <div class="span8">
+<label><strong>Red:</strong></label>
+<textarea name="red" rows="8" style="width:100%">
+Col. Salt, 2Rd Long Range Pounders, 1B Xenon Hardened Shield, 1G Bi-fuel Jet Packs
+Cpt. Ordanaro, 2Rd Long Range Pounders, 1B Composite Armor, 1Y XT-77 Scope
+</textarea>
+<label><strong>Green:</strong></label>
+<textarea name="green" rows="8" style="width:100%">
+Long Glasser, 1Ra 166mm Artillery Tube, 2Y Zeropoint Field Sensor, 1B Forcefield Module
+Scrambler #1, 2Rh Kordavi Ranged Blades, 1Y Laser Designator, 1B Forcefield Module
+Scrambler #2, 2Rh Kordavi Ranged Blades, 1Y Laser Designator, 1B Forcefield Module
+Scrambler #2, 2Rh Kordavi Ranged Blades, 1Y Laser Designator, 1B Forcefield Module
+</textarea>
+<label><strong>Blue:</strong></label>
+<textarea name="blue" rows="8" style="width:100%">
+High Chub, 1Rd Gatling Meson Tracer, 1B Extra Chest Armor, 1G Gravity Lighters, 1Y Phase Detector
+</textarea>
+<button id="save" class="btn btn-primary">Save</button>
                 </div>
             </div>
         </div>

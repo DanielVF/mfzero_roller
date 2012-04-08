@@ -1,8 +1,9 @@
 (function() {
-  var Attachment, Attachments, Dice, Die, DieView, Frame, FrameCardView, Frames, allFrames, attachmentTypes,
+  var Attachment, Attachments, Dice, Die, DieView, Frame, FrameCardView, Frames, allFrames, attachmentTypes, loadFromSetup,
     __hasProp = Object.prototype.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; },
-    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
+    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+    __slice = Array.prototype.slice;
 
   attachmentTypes = {
     Ra: {
@@ -338,65 +339,57 @@
     });
   });
 
-  allFrames.add({
-    name: "Col. Salt",
-    team: "red",
-    setup: {
-      Rd: [2, 'Long Range Pounders'],
-      B: [1, 'Xenon Hardned Shield'],
-      G: [1, 'Bi-fuel Jet Packs']
-    }
+  $('#editFrames').on('click', function() {
+    $('#frameCards').toggle();
+    return $('#frameSetup').toggle();
   });
 
-  allFrames.add({
-    name: "Cpt. Ordanaro",
-    team: "red",
-    setup: {
-      Rd: [2, 'Long Range Pounders'],
-      B: [1, 'Composite Armour'],
-      Y: [1, 'XT-77 Scope']
-    }
+  $('#save').on('click', function() {
+    loadFromSetup();
+    $('#frameCards').toggle();
+    return $('#frameSetup').toggle();
   });
 
-  allFrames.add({
-    name: "Long Glasser",
-    team: "green",
-    setup: {
-      Ra: [1, "166mm Artillery Tube"],
-      Y: [2, "Zeropoint Field Sensor"],
-      B: [1, "Forcefield Module"]
+  loadFromSetup = function() {
+    var ATTACHMENT_REGEX, all, attachmentTexts, color, desc, frameAttachments, framesText, line, match, name, number, text, type, _i, _len, _ref, _results;
+    allFrames.each(function(x) {
+      return x.trigger('remove');
+    });
+    allFrames.reset();
+    ATTACHMENT_REGEX = /([0-9])?([A-Z][a-z]?) (.+)/;
+    _ref = ['red', 'green', 'blue'];
+    _results = [];
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      color = _ref[_i];
+      framesText = $('#frameSetup [name=' + color + ']').val();
+      _results.push((function() {
+        var _j, _k, _len2, _len3, _ref2, _ref3, _results2;
+        _ref2 = framesText.split("\n");
+        _results2 = [];
+        for (_j = 0, _len2 = _ref2.length; _j < _len2; _j++) {
+          line = _ref2[_j];
+          if (!(line.indexOf(',') > 0)) continue;
+          _ref3 = line.split(','), name = _ref3[0], attachmentTexts = 2 <= _ref3.length ? __slice.call(_ref3, 1) : [];
+          frameAttachments = {};
+          for (_k = 0, _len3 = attachmentTexts.length; _k < _len3; _k++) {
+            text = attachmentTexts[_k];
+            if (!(match = ATTACHMENT_REGEX.exec(text))) continue;
+            all = match[0], number = match[1], type = match[2], desc = match[3];
+            frameAttachments[type] = [number, desc];
+          }
+          _results2.push(allFrames.add({
+            name: name,
+            team: color,
+            setup: frameAttachments
+          }));
+        }
+        return _results2;
+      })());
     }
-  });
+    return _results;
+  };
 
-  allFrames.add({
-    name: "Scrambler #1",
-    team: "green",
-    setup: {
-      Rh: [2, "Kordavi Ranged Blades"],
-      Y: [1, "Laser Designator"],
-      B: [1, "Forcefield Module"]
-    }
-  });
-
-  allFrames.add({
-    name: "Scrambler #2",
-    team: "green",
-    setup: {
-      Rh: [2, "Kordavi Ranged Blades"],
-      Y: [1, "Laser Designator"],
-      B: [1, "Forcefield Module"]
-    }
-  });
-
-  allFrames.add({
-    name: "Scrambler #3",
-    team: "green",
-    setup: {
-      Rh: [2, "Kordavi Ranged Blades"],
-      Y: [1, "Laser Designator"],
-      B: [1, "Forcefield Module"]
-    }
-  });
+  loadFromSetup();
 
   window.allFrames = allFrames;
 
