@@ -1,3 +1,6 @@
+Try it out!
+http://mfzeroroller.s3.amazonaws.com/index.html
+
 ## What needs doing.
 
 [x] Display Bots
