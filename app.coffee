@@ -52,6 +52,8 @@ class Attachments extends Backbone.Collection
         attachmentTypes[a.id].order
     
 class Frame extends Backbone.Model
+    moved: -> @get('moved') isnt false and @get('moved') isnt undefined
+    
     initialize: ->
         @dice = new Dice
         @attachments = new Attachments  
@@ -74,11 +76,15 @@ class Frame extends Backbone.Model
     
     endTurn: ->
         @dice.each (d)->d.set value: undefined
-        @set rolled: false
+        @set rolled: false, moved: false
     
     roll: ->
         @dice.each (die)->die.roll()
         @set rolled:true
+    
+    toggleMoved: ->
+        console.log('aaa')
+        @set moved: not @moved()
 
 class Frames extends Backbone.Collection
     model: Frame
@@ -89,21 +95,27 @@ class FrameCardView extends Backbone.View
     tagName: 'div'
     
     events:
-        'click' : 'roll'
+        'click' : 'click'
     
     initialize: ->
         @model.on 'change', @render
         @model.on 'remove', => @remove()
         @model.on 'destroy', => @remove()
         
-    roll: =>
-        return if @model.get('rolled')
-        @model.roll()
+    click: =>
+        if not @model.get('rolled')
+            @model.roll()
+        else
+            @model.toggleMoved()
+        return false
+        
     
     render: =>
-        $card = $('<div>').attr('class','').addClass('card');
+        $card = $('<div>').attr('class','card card-frame')
         $(@el).addClass('span3').html('').append($card)
         $card.append($('<h1>').text(@model.get 'name')).addClass("team-#{@model.get('team')}")
+        if @model.moved()
+            $card.addClass('moved')
         $attachments = $('<div class="attachments">').appendTo($card)
         @model.attachments.each (attachment) ->
             $attachment = $('<div class="attachment">').html('

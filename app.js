@@ -132,6 +132,10 @@
       Frame.__super__.constructor.apply(this, arguments);
     }
 
+    Frame.prototype.moved = function() {
+      return this.get('moved') !== false && this.get('moved') !== void 0;
+    };
+
     Frame.prototype.initialize = function() {
       var attachment, desc, die, dieCount, i, setup, type, typeInfo, _ref, _ref2, _results;
       this.dice = new Dice;
@@ -172,7 +176,8 @@
         });
       });
       return this.set({
-        rolled: false
+        rolled: false,
+        moved: false
       });
     };
 
@@ -182,6 +187,13 @@
       });
       return this.set({
         rolled: true
+      });
+    };
+
+    Frame.prototype.toggleMoved = function() {
+      console.log('aaa');
+      return this.set({
+        moved: !this.moved()
       });
     };
 
@@ -209,14 +221,14 @@
 
     function FrameCardView() {
       this.render = __bind(this.render, this);
-      this.roll = __bind(this.roll, this);
+      this.click = __bind(this.click, this);
       FrameCardView.__super__.constructor.apply(this, arguments);
     }
 
     FrameCardView.prototype.tagName = 'div';
 
     FrameCardView.prototype.events = {
-      'click': 'roll'
+      'click': 'click'
     };
 
     FrameCardView.prototype.initialize = function() {
@@ -230,16 +242,21 @@
       });
     };
 
-    FrameCardView.prototype.roll = function() {
-      if (this.model.get('rolled')) return;
-      return this.model.roll();
+    FrameCardView.prototype.click = function() {
+      if (!this.model.get('rolled')) {
+        this.model.roll();
+      } else {
+        this.model.toggleMoved();
+      }
+      return false;
     };
 
     FrameCardView.prototype.render = function() {
       var $attachments, $card;
-      $card = $('<div>').attr('class', '').addClass('card');
+      $card = $('<div>').attr('class', 'card card-frame');
       $(this.el).addClass('span3').html('').append($card);
       $card.append($('<h1>').text(this.model.get('name'))).addClass("team-" + (this.model.get('team')));
+      if (this.model.moved()) $card.addClass('moved');
       $attachments = $('<div class="attachments">').appendTo($card);
       this.model.attachments.each(function(attachment) {
         var $attachment, die, _i, _len, _ref, _results;
