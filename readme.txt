@@ -3,13 +3,13 @@
 [x] Display Bots
 [x] Roll Dice
 [x] Clear Dice
-[ ] Mark frames as having finished their move
+[x] Mark frames as having finished their move
 [ ] Drag white Dice to replace other dice
 [ ] Drag yellow dice to spot other frames.
-[ ] Add/Edit frames
+[x] Add/Edit frames
 [ ] Save setups to LocalStorage
-[ ] Keep teams together
-[ ] Drag bots to reorder
+[x] Keep teams together
+[x] User defined frame ordering
 
 
 ## Adding Frames
