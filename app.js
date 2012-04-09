@@ -138,7 +138,7 @@
     };
 
     Frame.prototype.initialize = function() {
-      var attachment, desc, die, dieCount, i, setup, type, typeInfo, _ref, _ref2, _results;
+      var attachment, d6Count, d8Count, desc, die, i, setup, type, typeInfo, _ref, _ref2, _results;
       this.dice = new Dice;
       this.attachments = new Attachments;
       setup = this.get('setup');
@@ -146,19 +146,32 @@
       _ref = this.get('setup');
       _results = [];
       for (type in _ref) {
-        _ref2 = _ref[type], dieCount = _ref2[0], desc = _ref2[1];
+        _ref2 = _ref[type], d6Count = _ref2[0], d8Count = _ref2[1], desc = _ref2[2];
+        console.log('xx', d6Count, d8Count, desc);
         typeInfo = attachmentTypes[type];
         attachment = new Attachment({
           id: type,
           name: typeInfo['name'],
           description: desc || ''
         });
-        for (i = 1; 1 <= dieCount ? i <= dieCount : i >= dieCount; 1 <= dieCount ? i++ : i--) {
-          die = new Die({
-            color: typeInfo['color']
-          });
-          this.dice.add(die);
-          attachment.dice.add(die);
+        if (d6Count > 0) {
+          for (i = 1; 1 <= d6Count ? i <= d6Count : i >= d6Count; 1 <= d6Count ? i++ : i--) {
+            die = new Die({
+              color: typeInfo['color']
+            });
+            this.dice.add(die);
+            attachment.dice.add(die);
+          }
+        }
+        if (d8Count > 0) {
+          for (i = 1; 1 <= d8Count ? i <= d8Count : i >= d8Count; 1 <= d8Count ? i++ : i--) {
+            die = new Die({
+              color: typeInfo['color'],
+              d: 8
+            });
+            this.dice.add(die);
+            attachment.dice.add(die);
+          }
         }
         _results.push(this.attachments.add(attachment));
       }
@@ -192,7 +205,6 @@
     };
 
     Frame.prototype.toggleMoved = function() {
-      console.log('aaa');
       return this.set({
         moved: !this.moved()
       });
@@ -313,9 +325,11 @@
     };
 
     DieView.prototype.render = function() {
-      $(this.el).attr('class', "die " + (this.model.get('color'))).text(this.model.get('value') || '');
+      $(this.el).attr('class', "die " + (this.model.get('color')) + " d" + (this.model.d())).html($('<span>').text(this.model.get('value') || ''));
       if (!(this.model.get('value') != null)) this.$el.addClass('unrolled');
-      if (this.model.enabled() === false) this.$el.addClass('disabled').text("X");
+      if (this.model.enabled() === false) {
+        this.$el.addClass('disabled').find('span').text("X");
+      }
       return this;
     };
 
@@ -351,12 +365,12 @@
   });
 
   loadFromSetup = function() {
-    var ATTACHMENT_REGEX, all, attachmentTexts, color, desc, frameAttachments, framesText, line, match, name, number, text, type, _i, _len, _ref, _results;
+    var ATTACHMENT_REGEX, all, alt8, attachmentTexts, color, d6s, d8s, desc, frameAttachments, framesText, line, match, name, text, type, _i, _len, _ref, _results;
     allFrames.each(function(x) {
       return x.trigger('remove');
     });
     allFrames.reset();
-    ATTACHMENT_REGEX = /([0-9])?([A-Z][a-z]?) (.+)/;
+    ATTACHMENT_REGEX = /(1d8)?([0-9])?([A-Z][a-z]?)(\+1?d8)? ?(.+)/;
     _ref = ['red', 'green', 'blue'];
     _results = [];
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
@@ -374,8 +388,10 @@
           for (_k = 0, _len3 = attachmentTexts.length; _k < _len3; _k++) {
             text = attachmentTexts[_k];
             if (!(match = ATTACHMENT_REGEX.exec(text))) continue;
-            all = match[0], number = match[1], type = match[2], desc = match[3];
-            frameAttachments[type] = [number, desc];
+            all = match[0], alt8 = match[1], d6s = match[2], type = match[3], d8s = match[4], desc = match[5];
+            if (d8s !== void 0) d8s = 1;
+            if (alt8 !== void 0) d8s = 1;
+            frameAttachments[type] = [d6s || 0, d8s || 0, desc];
           }
           _results2.push(allFrames.add({
             name: name,

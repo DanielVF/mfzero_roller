@@ -59,16 +59,23 @@ class Frame extends Backbone.Model
         @attachments = new Attachments  
         setup = @get('setup')
         setup['W']=[2]
-        for type, [dieCount, desc] of @get('setup')
+        for type, [d6Count, d8Count, desc] of @get('setup')
+            console.log('xx',d6Count, d8Count, desc)
             typeInfo = attachmentTypes[type]
             attachment = new Attachment
                 id: type
                 name: typeInfo['name']
                 description: desc or ''
-            for i in [1..dieCount]
-                    die = new Die( {color: typeInfo['color']} )
-                    @dice.add die
-                    attachment.dice.add die
+            if d6Count > 0
+                for i in [1..d6Count]
+                        die = new Die( {color: typeInfo['color']} )
+                        @dice.add die
+                        attachment.dice.add die
+            if d8Count > 0
+                for i in [1..d8Count]
+                        die = new Die( {color: typeInfo['color'], d:8 } )
+                        @dice.add die
+                        attachment.dice.add die
             @attachments.add attachment
     
     addAttachment: (type, settings)->
@@ -83,7 +90,6 @@ class Frame extends Backbone.Model
         @set rolled:true
     
     toggleMoved: ->
-        console.log('aaa')
         @set moved: not @moved()
 
 class Frames extends Backbone.Collection
@@ -139,11 +145,13 @@ class DieView extends Backbone.View
         @model.set 'enabled': not @model.enabled()
         return false
     render: =>
-        $(@el).attr('class',"die #{@model.get('color')}").text(@model.get('value') or '')
+        $(@el)
+        .attr('class',"die #{@model.get('color')} d#{@model.d()}")
+        .html($('<span>').text(@model.get('value') or ''))
         if not @model.get('value')?
             @$el.addClass('unrolled')
         if @model.enabled() is false
-            @$el.addClass('disabled').text("X")
+            @$el.addClass('disabled').find('span').text("X")
         return @
 
 allFrames = new(Frames)
@@ -167,15 +175,18 @@ $('#save').on 'click', ->
 loadFromSetup = ->
     allFrames.each (x)->x.trigger('remove')
     allFrames.reset()
-    ATTACHMENT_REGEX = /([0-9])?([A-Z][a-z]?) (.+)/
+    ATTACHMENT_REGEX = /(1d8)?([0-9])?([A-Z][a-z]?)(\+1?d8)? ?(.+)/
     for color in ['red','green','blue']
         framesText = $('#frameSetup [name='+color+']').val()
         for line in framesText.split("\n") when line.indexOf(',')>0
             [name,attachmentTexts...] = line.split(',')
             frameAttachments = {}
             for text in attachmentTexts when match = ATTACHMENT_REGEX.exec(text)
-                [all,number,type,desc] = match
-                frameAttachments[type] = [number,desc]
+                [all,alt8,d6s,type,d8s,desc] = match
+                # console.log(match)
+                d8s = 1 if d8s isnt undefined
+                d8s = 1 if alt8 isnt undefined
+                frameAttachments[type] = [ d6s or 0 , d8s or 0 , desc]
             allFrames.add {name: name, team: color, setup: frameAttachments}
 
 loadFromSetup()

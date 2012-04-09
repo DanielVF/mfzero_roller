@@ -36,7 +36,7 @@
             .card > .attachments > .attachment > h3 { margin-left:60px }
             .card > .attachments > .attachment > p { margin-left:60px }
             .card > .attachments > .attachment > .dice { margin-left: -20px; margin-top:6px; width: 78px; text-align: right; display: block; float:left; }
-            .card > .attachments > .attachment > .dice > i {  width:35px; height: 27px; display:block; float: right; margin-right:2px; text-align:center; font-size:20px; padding-top:8px; border-radius: 4px; }
+            .card > .attachments > .attachment > .dice > i {  width:35px; height: 27px; display:block; float: right; margin-right:2px; text-align:center; font-size:20px; padding-top:8px; }
             
             .dice > i {background: #F1EFDF; border:1px solid white;}
             .dice > i.red{ background: #D30C0C; color:white}
@@ -46,6 +46,17 @@
             .dice > i.white{ background: #fff; color:#555; border-color:#ccc;}
             .dice > i.unrolled{ opacity:0.75;}
             .dice > i.disabled{ opacity:0.75; }
+            
+            .dice {position:relative;}
+            .dice > i:nth-child(3){ position: absolute; left: 20px; top: 0px;}
+            i.d6{border-radius: 4px;}
+            i.d8{ -webkit-transform: rotate(45deg) scale(.95); -moz-transform: rotate(45deg) scale(.95) ; border-radius: 4px;  }
+            i.d8 > span { -webkit-transform: rotate(-45deg) scale(1.05); -moz-transform: rotate(-45deg) scale(.95); display:block; margin-left:-2px;}
+            
+            .dice > i:nth-child(3).d8 { -webkit-transform: rotate(-45deg) scale(.85); -moz-transform: scale(.85); border-radius: 10px; }
+            .dice > i:nth-child(3).d8 span { -webkit-transform: scale(1.17) rotate(45deg); -moz-transform: scale(1.17) rotate(45deg); }
+            
+            
         </style>
     </head>
     <body>
@@ -75,15 +86,15 @@
                 <div class="span8">
 <label><strong>Red:</strong></label>
 <textarea name="red" rows="8" style="width:100%">
-Col. Salt, 2Rd Long Range Pounders, 1B Xenon Hardened Shield, 1G Bi-fuel Jet Packs
-Cpt. Ordanaro, 2Rd Long Range Pounders, 1B Composite Armor, 1Y XT-77 Scope
+Col. Salt, 2Rd+1d8 Long Range Pounders, 1B Xenon Hardened Shield, 1G Bi-fuel Jet Packs
+Cpt. Ordanaro, 2Rd+1d8 Twin Assault Canons, 1B Composite Armor, 1Y XT-77 Scope
 </textarea>
 <label><strong>Green:</strong></label>
 <textarea name="green" rows="8" style="width:100%">
-Long Glasser, 1Ra 166mm Artillery Tube, 2Y Zeropoint Field Sensor, 1B Forcefield Module
-Scrambler #1, 2Rh Kordavi Ranged Blades, 1Y Laser Designator, 1B Forcefield Module
-Scrambler #2, 2Rh Kordavi Ranged Blades, 1Y Laser Designator, 1B Forcefield Module
-Scrambler #2, 2Rh Kordavi Ranged Blades, 1Y Laser Designator, 1B Forcefield Module
+Long Glasser, 2Ra 166mm Artillery Tube, 2Y Zeropoint Field Sensor, 1B Small Forcefield Module
+Scrambler #1, 2Rh Kordavi Ranged Blades, 1Y Laser Designator, 2B Forcefield Module, 1d8G Scrambler Legs
+Scrambler #2, 2Rh Kordavi Ranged Blades, 1Y Laser Designator, 2B Forcefield Module, 1d8G Scrambler Legs
+Scrambler #2, 2Rh Kordavi Ranged Blades, 1Y Laser Designator, 2B Forcefield Module, 1d8G Scrambler Legs
 </textarea>
 <label><strong>Blue:</strong></label>
 <textarea name="blue" rows="8" style="width:100%">
