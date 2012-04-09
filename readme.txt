@@ -6,7 +6,7 @@ http://mfzeroroller.s3.amazonaws.com/index.html
 [x] Handle d8's for weapons
 [ ] Investigate showing highest dice full size, and smaller dice beside.
 [ ] Handle bonus d8 for movement when they add from in game weapon loss
-[ ] Handle SSR
+[ ] Handle SSR, click once to roll, again to disable, again to enable and clear
 [ ] Dice animation
 [ ] Add doomsday clock.
 
