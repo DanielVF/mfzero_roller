@@ -72,6 +72,10 @@ body {
   padding-top: 0px;
   font-size: 12px;
 }
+.card > .attachments > .attachment > .dice > i:nth-child(2).d6,
+.card > .attachments > .attachment > .dice i:nth-child(3).d6 {
+  border-radius: 2px;
+}
 .card > .attachments > .attachment > .dice > i:nth-child(2) > div,
 .card > .attachments > .attachment > .dice i:nth-child(3) > div {
   margin-top: -1px;
@@ -126,7 +130,7 @@ body {
   opacity: 0.75;
 }
 .dice i.d6 {
-  border-radius: 2px;
+  border-radius: 4px;
 }
 .dice i.d8 {
   border-radius: 14px;
