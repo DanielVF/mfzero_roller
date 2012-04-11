@@ -126,7 +126,7 @@ body {
   opacity: 0.75;
 }
 .dice i.d6 {
-  border-radius: 4px;
+  border-radius: 2px;
 }
 .dice i.d8 {
   border-radius: 14px;
