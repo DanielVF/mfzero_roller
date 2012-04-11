@@ -35,17 +35,17 @@ body{ background: #EBE8D3; }
         }
         /* Card attachment die positions */
         > .dice {
-          > i { float: none; position: absolute;}
+          > i { float: none; position: absolute; font-style:normal;}
           > i:nth-child(1) { right:0px; }
-          > i:nth-child(2) { right:39px; }
-          > i:nth-child(3) { right:39px; top:19px;}
+          > i:nth-child(2) { right:41px; }
+          > i:nth-child(3) { right:41px; top:20px;}
           > i:nth-child(2), i:nth-child(3){
-            width: 16px;
-            height: 16px;
+            width: 14px;
+            height: 14px;
             padding-top:0px;
             font-size:12px;
             &.d6{border-radius: 2px;}
-            > div{ margin-top:-1px;}
+            > div{ margin-top:-2px;}
           }
         }
       }
@@ -79,7 +79,7 @@ body{ background: #EBE8D3; }
   i:nth-child(3).d8 span { -webkit-transform: scale(1.17) rotate(45deg); -moz-transform: scale(1.17) rotate(45deg); }
 */  
   i.d6{border-radius: 4px;}
-  i.d8{border-radius: 14px;}
+  i.d8{border-radius: 10px;}
 /*  i.d8{ -webkit-transform: rotate(45deg) scale(.95); -moz-transform: rotate(45deg) scale(.95) ; border-radius: 4px;  }
   i.d8 > div > span { -webkit-transform: rotate(-45deg) scale(1.05); -moz-transform: rotate(-45deg) scale(.95); display:block; margin-left:-2px;}
 */}

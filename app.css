@@ -54,21 +54,22 @@ body {
 .card > .attachments > .attachment > .dice > i {
   float: none;
   position: absolute;
+  font-style: normal;
 }
 .card > .attachments > .attachment > .dice > i:nth-child(1) {
   right: 0px;
 }
 .card > .attachments > .attachment > .dice > i:nth-child(2) {
-  right: 39px;
+  right: 41px;
 }
 .card > .attachments > .attachment > .dice > i:nth-child(3) {
-  right: 39px;
-  top: 19px;
+  right: 41px;
+  top: 20px;
 }
 .card > .attachments > .attachment > .dice > i:nth-child(2),
 .card > .attachments > .attachment > .dice i:nth-child(3) {
-  width: 16px;
-  height: 16px;
+  width: 14px;
+  height: 14px;
   padding-top: 0px;
   font-size: 12px;
 }
@@ -78,7 +79,7 @@ body {
 }
 .card > .attachments > .attachment > .dice > i:nth-child(2) > div,
 .card > .attachments > .attachment > .dice i:nth-child(3) > div {
-  margin-top: -1px;
+  margin-top: -2px;
 }
 .dice {
   position: relative;
@@ -133,7 +134,7 @@ body {
   border-radius: 4px;
 }
 .dice i.d8 {
-  border-radius: 14px;
+  border-radius: 10px;
 }
 .footer {
   opacity: 0.4;
