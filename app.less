@@ -8,45 +8,43 @@ body{ background: #EBE8D3; }
     background: #fff;
     box-shadow: #ccc 1px 1px 1px;
     position:relative;
+    h1 {
+        color: white;
+        position: absolute;
+        top: 45px;
+        width:214px;
+        padding-left:4px;
     }
-.card > h1 {
-    color: white;
-    position: absolute;
-    top: 45px;
-    width:214px;
-    padding-left:4px;
-}
-.card.team-red > h1 {
-    background: #D30C0C;
-}
-.card.team-green > h1 {
-    background: #2C7204;
-}
-.card.team-blue > h1 {
-    background: #005A85;
-}
-.card.moved {opacity:0.6; }
+    .team-red > h1 { background: #D30C0C; }
+    .team-green > h1 { background: #2C7204; }
+    .team-blue > h1{ background:#005A85; }
+    .moved { opacity:0.6; }
 
-.card > .attachments { margin-top:90px }
-.card > .attachments > .attachment > h3 { margin-left:60px }
-.card > .attachments > .attachment > p { margin-left:60px }
-.card > .attachments > .attachment > .dice { margin-left: -20px; margin-top:6px; width: 78px; text-align: right; display: block; float:left; }
-.card > .attachments > .attachment > .dice > i {  width:35px; height: 27px; display:block; float: right; margin-right:2px; text-align:center; font-size:20px; padding-top:8px; }
+    .attachments { margin-top:90px }
+    .attachments > .attachment > h3 { margin-left:60px }
+    .attachments > .attachment > p { margin-left:60px }
+    .attachments > .attachment > .dice { margin-left: -20px; margin-top:6px; width: 78px; text-align: right; display: block; float:left; }
+    .attachments > .attachment > .dice > i {  width:35px; height: 27px; display:block; float: right; margin-right:2px; text-align:center; font-size:20px; padding-top:8px; }
+    
+}
 
-.dice > i {background: #F1EFDF; border:1px solid white;}
-.dice > i.red{ background: #D30C0C; color:white}
-.dice > i.blue{ background: #0C73D3; color:white}
-.dice > i.green{ background: #1AC01A; color:white}
-.dice > i.yellow{ background: #FFE41B; color:#555 }
-.dice > i.white{ background: #fff; color:#555; border-color:#ccc;}
-.dice > i.unrolled{ opacity:0.75;}
-.dice > i.disabled{ opacity:0.75; }
+.dice{
+  position:relative;
+  > i {background: #F1EFDF; border:1px solid white;}
+  > i.red{ background: #D30C0C; color:white}
+  > i.blue{ background: #0C73D3; color:white}
+  > i.green{ background: #1AC01A; color:white}
+  > i.yellow{ background: #FFE41B; color:#555 }
+  > i.white{ background: #fff; color:#555; border-color:#ccc;}
+  > i.unrolled{ opacity:0.75;}
+  > i.disabled{ opacity:0.75; }
+  > i:nth-child(3){ position: absolute; left: 20px; top: 0px;}
+  > i:nth-child(3).d8 { -webkit-transform: rotate(-45deg) scale(.85); -moz-transform: scale(.85); border-radius: 10px; }
+  > i:nth-child(3).d8 span { -webkit-transform: scale(1.17) rotate(45deg); -moz-transform: scale(1.17) rotate(45deg); }
+  
+  i.d6{border-radius: 4px;}
+  i.d8{ -webkit-transform: rotate(45deg) scale(.95); -moz-transform: rotate(45deg) scale(.95) ; border-radius: 4px;  }
+  i.d8 > span { -webkit-transform: rotate(-45deg) scale(1.05); -moz-transform: rotate(-45deg) scale(.95); display:block; margin-left:-2px;}
+}
 
-.dice {position:relative;}
-.dice > i:nth-child(3){ position: absolute; left: 20px; top: 0px;}
-i.d6{border-radius: 4px;}
-i.d8{ -webkit-transform: rotate(45deg) scale(.95); -moz-transform: rotate(45deg) scale(.95) ; border-radius: 4px;  }
-i.d8 > span { -webkit-transform: rotate(-45deg) scale(1.05); -moz-transform: rotate(-45deg) scale(.95); display:block; margin-left:-2px;}
 
-.dice > i:nth-child(3).d8 { -webkit-transform: rotate(-45deg) scale(.85); -moz-transform: scale(.85); border-radius: 10px; }
-.dice > i:nth-child(3).d8 span { -webkit-transform: scale(1.17) rotate(45deg); -moz-transform: scale(1.17) rotate(45deg); }
