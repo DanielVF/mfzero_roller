@@ -171,6 +171,7 @@ $('#editFrames').on 'click', ->
     $('#frameSetup').toggle()
 $('#save').on 'click', ->
     loadFromSetup()
+    $('#gettingStarted').remove()
     $('#frameCards').toggle()
     $('#frameSetup').toggle()
 

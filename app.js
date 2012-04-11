@@ -372,6 +372,7 @@
 
   $('#save').on('click', function() {
     loadFromSetup();
+    $('#gettingStarted').remove();
     $('#frameCards').toggle();
     return $('#frameSetup').toggle();
   });
