@@ -325,7 +325,7 @@
     };
 
     DieView.prototype.render = function() {
-      $(this.el).attr('class', "die " + (this.model.get('color')) + " d" + (this.model.d())).html($('<span>').text(this.model.get('value') || ''));
+      $(this.el).attr('class', "die " + (this.model.get('color')) + " d" + (this.model.d())).html($('<div>').append($('<span>').text(this.model.get('value') || '')));
       if (!(this.model.get('value') != null)) this.$el.addClass('unrolled');
       if (this.model.enabled() === false) {
         this.$el.addClass('disabled').find('span').text("X");

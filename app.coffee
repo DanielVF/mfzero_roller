@@ -147,7 +147,7 @@ class DieView extends Backbone.View
     render: =>
         $(@el)
         .attr('class',"die #{@model.get('color')} d#{@model.d()}")
-        .html($('<span>').text(@model.get('value') or ''))
+        .html($('<div>').append($('<span>').text(@model.get('value') or '')))
         if not @model.get('value')?
             @$el.addClass('unrolled')
         if @model.enabled() is false
