@@ -87,6 +87,16 @@
 
     Dice.prototype.model = Die;
 
+    Dice.prototype.comparator = function(d) {
+      return 1000 - d.value();
+    };
+
+    Dice.prototype.values = function() {
+      return this.map(function(d) {
+        return d.value();
+      });
+    };
+
     return Dice;
 
   })(Backbone.Collection);
@@ -147,7 +157,6 @@
       _results = [];
       for (type in _ref) {
         _ref2 = _ref[type], d6Count = _ref2[0], d8Count = _ref2[1], desc = _ref2[2];
-        console.log('xx', d6Count, d8Count, desc);
         typeInfo = attachmentTypes[type];
         attachment = new Attachment({
           id: type,
@@ -280,6 +289,9 @@
             ').appendTo($attachments);
         $attachment.find('h3').text(attachment.get('name'));
         $attachment.find('p').text(attachment.get('description'));
+        attachment.dice.sort({
+          silent: true
+        });
         _ref = attachment.dice.models;
         _results = [];
         for (_i = 0, _len = _ref.length; _i < _len; _i++) {

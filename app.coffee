@@ -41,6 +41,8 @@ class Die extends Backbone.Model
     
 class Dice extends Backbone.Collection
     model: Die
+    comparator: (d) -> 1000-d.value()
+    values: -> @map (d) ->d.value()
 
 class Attachment extends Backbone.Model
     initialize: ->
@@ -60,7 +62,6 @@ class Frame extends Backbone.Model
         setup = @get('setup')
         setup['W']=[2]
         for type, [d6Count, d8Count, desc] of @get('setup')
-            console.log('xx',d6Count, d8Count, desc)
             typeInfo = attachmentTypes[type]
             attachment = new Attachment
                 id: type
@@ -131,6 +132,7 @@ class FrameCardView extends Backbone.View
             ').appendTo($attachments)
             $attachment.find('h3').text(attachment.get('name'))
             $attachment.find('p').text(attachment.get('description'))
+            attachment.dice.sort({silent:true})
             for die in attachment.dice.models
                 new DieView({model:die}).render().$el.appendTo($attachment.find('.dice'))
         return @
@@ -183,7 +185,6 @@ loadFromSetup = ->
             frameAttachments = {}
             for text in attachmentTexts when match = ATTACHMENT_REGEX.exec(text)
                 [all,alt8,d6s,type,d8s,desc] = match
-                # console.log(match)
                 d8s = 1 if d8s isnt undefined
                 d8s = 1 if alt8 isnt undefined
                 frameAttachments[type] = [ d6s or 0 , d8s or 0 , desc]
