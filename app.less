@@ -23,6 +23,7 @@ body{ background: #EBE8D3; }
     > .attachments { 
       margin-top:90px;
       > .attachment {
+        padding: 0 0 0 5px;
         > h3 { margin-left:60px }
         > p { margin-left:60px }
         > .dice { 
@@ -80,9 +81,9 @@ body{ background: #EBE8D3; }
 */  
   i.d6{border-radius: 4px;}
   i.d8{border-radius: 10px;}
-/*  i.d8{ -webkit-transform: rotate(45deg) scale(.95); -moz-transform: rotate(45deg) scale(.95) ; border-radius: 4px;  }
-  i.d8 > div > span { -webkit-transform: rotate(-45deg) scale(1.05); -moz-transform: rotate(-45deg) scale(.95); display:block; margin-left:-2px;}
-*/}
+  i.d8{ transform: rotate(45deg); -ms-transform: rotate(45deg); -webkit-transform: rotate(45deg); -o-transform: rotate(45deg); -moz-transform: rotate(45deg); border-radius: 4px;  }
+  i.d8 > div > span { transform: rotate(45deg); -ms-transform: rotate(45deg); -webkit-transform: rotate(45deg); -o-transform: rotate(45deg); -moz-transform: rotate(45deg); display:block; margin-left:-2px;}
+}
 
 
 .footer { opacity:0.4; font-size:12px; margin-top:1em; text-align:right;}
