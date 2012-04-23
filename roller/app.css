@@ -34,6 +34,7 @@ body {
   margin-top: 90px;
 }
 .card > .attachments > .attachment {
+  padding: 0 0 0 5px;
   /* Card attachment die positions */
 
 }
@@ -87,9 +88,6 @@ body {
   i:nth-child(3).d8 { -webkit-transform: rotate(-45deg) scale(.85); -moz-transform: scale(.85); border-radius: 10px; }
   i:nth-child(3).d8 span { -webkit-transform: scale(1.17) rotate(45deg); -moz-transform: scale(1.17) rotate(45deg); }
 */
-  /*  i.d8{ -webkit-transform: rotate(45deg) scale(.95); -moz-transform: rotate(45deg) scale(.95) ; border-radius: 4px;  }
-  i.d8 > div > span { -webkit-transform: rotate(-45deg) scale(1.05); -moz-transform: rotate(-45deg) scale(.95); display:block; margin-left:-2px;}
-*/
 }
 .dice i {
   width: 35px;
@@ -135,6 +133,22 @@ body {
 }
 .dice i.d8 {
   border-radius: 10px;
+}
+.dice i.d8 {
+  transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+  -o-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  border-radius: 4px;
+}
+.dice i.d8 > div > span {
+  transform: rotate(-45deg);
+  -ms-transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+  -o-transform: rotate(-45deg);
+  -moz-transform: rotate(-45deg);
+  display: block;
 }
 .footer {
   opacity: 0.4;
