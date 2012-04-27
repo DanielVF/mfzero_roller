@@ -2,39 +2,44 @@
   var Attachment, Attachments, Dice, Die, DieView, Frame, FrameCardView, Frames, allFrames, attachmentTypes, loadFromSetup,
     __hasProp = Object.prototype.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; },
-    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-    __slice = Array.prototype.slice;
+    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
   attachmentTypes = {
     Ra: {
       name: "Artillery",
       color: "red",
-      order: 1
+      order: 1,
+      description: "275mm howitzer"
     },
     Rd: {
       name: "Direct Fire",
       color: "red",
-      order: 2
+      order: 2,
+      description: "Gatling meson cannons"
     },
     Rh: {
       name: "Hand to Hand",
       color: "red",
-      order: 3
+      order: 3,
+      description: "Close combat gear"
     },
     B: {
       name: "Defense",
       color: "blue",
-      order: 4
+      order: 4,
+      description: "ECM package"
     },
     Y: {
       name: "Spotting",
       color: "yellow",
-      order: 5
+      order: 5,
+      description: "Laser designator"
     },
     G: {
       name: "Movement",
       color: "green",
-      order: 6
+      order: 6,
+      description: "Augemented mobility"
     },
     W: {
       name: "",
@@ -158,10 +163,12 @@
       for (type in _ref) {
         _ref2 = _ref[type], d6Count = _ref2[0], d8Count = _ref2[1], desc = _ref2[2];
         typeInfo = attachmentTypes[type];
+        if (typeInfo == null) continue;
+        if (desc === void 0 || desc === '') desc = false;
         attachment = new Attachment({
           id: type,
           name: typeInfo['name'],
-          description: desc || ''
+          description: desc || typeInfo.description
         });
         if (d6Count > 0) {
           for (i = 1; 1 <= d6Count ? i <= d6Count : i >= d6Count; 1 <= d6Count ? i++ : i--) {
@@ -278,6 +285,16 @@
       $card = $('<div>').attr('class', 'card card-frame');
       $(this.el).addClass('span3').html('').append($card);
       $card.append($('<h1>').text(this.model.get('name'))).addClass("team-" + (this.model.get('team')));
+      if (this.model.get('name').length > 13) {
+        $card.find('h1').css({
+          'font-size': '25px'
+        });
+      }
+      if (this.model.get('name').length > 16) {
+        $card.find('h1').css({
+          'font-size': '17px'
+        });
+      }
       if (this.model.moved()) $card.addClass('moved');
       $attachments = $('<div class="attachments">').appendTo($card);
       this.model.attachments.each(function(attachment) {
@@ -285,10 +302,12 @@
         $attachment = $('<div class="attachment">').html('\
                 <div class="dice"></div>\
                 <h3></h3>\
-                <p></p>\
+                <p>&nbsp;</p>\
             ').appendTo($attachments);
         $attachment.find('h3').text(attachment.get('name'));
-        $attachment.find('p').text(attachment.get('description'));
+        if (attachment.get('description') !== '') {
+          $attachment.find('p').text(attachment.get('description'));
+        }
         attachment.dice.sort({
           silent: true
         });
@@ -378,33 +397,42 @@
   });
 
   loadFromSetup = function() {
-    var ATTACHMENT_REGEX, all, alt8, attachmentTexts, color, d6s, d8s, desc, frameAttachments, framesText, line, match, name, text, type, _i, _len, _ref, _results;
+    var DICE_REGEX, TRIM_REGEX, all, attachments, color, die, fragment, frameAttachments, framesText, line, match, name, text, type, _i, _len, _ref, _results;
     allFrames.each(function(x) {
       return x.trigger('remove');
     });
     allFrames.reset();
-    ATTACHMENT_REGEX = /(1d8)?([0-9])?([A-Z][a-z]?)(\+1?d8)? ?(.+)/;
+    DICE_REGEX = /[dD]([68])([A-Za-z]{1,2})/;
+    TRIM_REGEX = /[ \t](.+)[ \t]/;
     _ref = ['red', 'green', 'blue'];
     _results = [];
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
       color = _ref[_i];
       framesText = $('#frameSetup [name=' + color + ']').val();
       _results.push((function() {
-        var _j, _k, _len2, _len3, _ref2, _ref3, _results2;
+        var _j, _k, _len2, _len3, _ref2, _ref3, _ref4, _results2;
         _ref2 = framesText.split("\n");
         _results2 = [];
         for (_j = 0, _len2 = _ref2.length; _j < _len2; _j++) {
           line = _ref2[_j];
-          if (!(line.indexOf(',') > 0)) continue;
-          _ref3 = line.split(','), name = _ref3[0], attachmentTexts = 2 <= _ref3.length ? __slice.call(_ref3, 1) : [];
+          if (!(line.indexOf(':') > 0)) continue;
+          _ref3 = line.split(':'), name = _ref3[0], attachments = _ref3[1];
+          if (name == null) continue;
           frameAttachments = {};
-          for (_k = 0, _len3 = attachmentTexts.length; _k < _len3; _k++) {
-            text = attachmentTexts[_k];
-            if (!(match = ATTACHMENT_REGEX.exec(text))) continue;
-            all = match[0], alt8 = match[1], d6s = match[2], type = match[3], d8s = match[4], desc = match[5];
-            if (d8s !== void 0) d8s = 1;
-            if (alt8 !== void 0) d8s = 1;
-            frameAttachments[type] = [d6s || 0, d8s || 0, desc];
+          _ref4 = attachments.split(' ');
+          for (_k = 0, _len3 = _ref4.length; _k < _len3; _k++) {
+            fragment = _ref4[_k];
+            if (match = DICE_REGEX.exec(fragment)) {
+              all = match[0], die = match[1], type = match[2];
+              frameAttachments[type] || (frameAttachments[type] = [0, 0, '']);
+              if (die === "6") frameAttachments[type][0] += 1;
+              if (die === "8") frameAttachments[type][1] += 1;
+            } else {
+              if (frameAttachments[type] == null) continue;
+              text = fragment.replace(TRIM_REGEX, '$1').replace('(', '').replace(')', '');
+              if (text === '') continue;
+              frameAttachments[type][2] += text + ' ';
+            }
           }
           _results2.push(allFrames.add({
             name: name,
